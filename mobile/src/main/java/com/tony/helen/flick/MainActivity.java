@@ -41,6 +41,8 @@ public class MainActivity extends Activity implements Animation.AnimationListene
     @Override
     public void onAnimationEnd(Animation animation) {
         //Animation ended
+        Intent intent  = new Intent(getApplicationContext(), SpeakActivity.class);
+        startActivity(intent);
     }
 
     @Override
