@@ -1,9 +1,7 @@
 package com.tony.helen.flick;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.thalmic.myo.AbstractDeviceListener;
 import com.thalmic.myo.Arm;
@@ -18,7 +16,65 @@ import com.thalmic.myo.XDirection;
  * Created by tli on 2015-11-28.
  */
 public class GestureManager {
+    public enum Gesture {
+        FRONT_OUT ("front wave out", 0),
+        FRONT_IN ("front wave in", 1),
+        FRONT_FIST("front fist", 2),
+        FRONT_SPREAD("front fingers spread", 3),
+        IN_OUT ("front wave out", 0),
+        IN_IN ("front wave in", 1),
+        IN_FIST("front fist", 2),
+        IN_SPREAD("front fingers spread", 3),
+        DOWN_OUT ("front wave out", 0),
+        DOWN_IN ("front wave in", 1),
+        DOWN_FIST("front fist", 2),
+        DOWN_SPREAD("front fingers spread", 3),
+        LOCK("locked", 13),
+        UNLOCK("unlocked", 14);
+
+        private final String action;
+        private final int index;
+
+        Gesture(String action, int index) {
+            this.action = action;
+            this.index = index;
+        }
+
+        public String action() {
+            return action;
+        }
+
+        public int index() {
+            return index;
+        }
+    }
+
     Hub hub;
+    GestureListener listener;
+    private String[] gesturePhrases;
+    private float roll, pitch, yaw;
+
+    public GestureManager(Context context) {
+        gesturePhrases = new String[15];
+        listener = null;
+        for (int i = 0; i < 15; i++) {
+            gesturePhrases[i] = "testing";
+        }
+
+        hub = Hub.getInstance();
+        if (!hub.init(context, context.getPackageName())) {
+            return;
+        }
+
+        hub.addListener(mListener);
+    }
+
+    public void setListener(GestureListener listener) {
+        this.listener = listener;
+    }
+    public interface GestureListener {
+        void onNewGesture(int newGesture);
+    }
 
     // Classes that inherit from AbstractDeviceListener can be used to receive events from Myo devices.
     // If you do not override an event, the default behavior is to do nothing.
@@ -59,6 +115,10 @@ public class GestureManager {
         // represented as a quaternion.
         @Override
         public void onOrientationData(Myo myo, long timestamp, Quaternion rotation) {
+            //in : 10 -10 25
+            //down : 120 -85 160
+            //natural : 0 -20 -155
+
             // Calculate Euler angles (roll, pitch, and yaw) from the quaternion.
             float roll = (float) Math.toDegrees(Quaternion.roll(rotation));
             float pitch = (float) Math.toDegrees(Quaternion.pitch(rotation));
@@ -71,12 +131,13 @@ public class GestureManager {
                 pitch *= -1;
             }
         }
+
         // onPose() is called whenever a Myo provides a new pose.
         @Override
         public void onPose(Myo myo, long timestamp, Pose pose) {
             // Handle the cases of the Pose enumeration, and change the text of the text view
             // based on the pose we receive.
-            Log.v("myo", "works");
+
             switch (pose) {
                 case UNKNOWN:
                     break;
@@ -116,14 +177,7 @@ public class GestureManager {
         }
     };
 
-    public GestureManager(Context context) {
-        hub = Hub.getInstance();
-        if (!hub.init(context, context.getPackageName())) {
-            return;
-        }
 
-        hub.addListener(mListener);
-    }
 
     public void destroyListener() {
         hub.removeListener(mListener);

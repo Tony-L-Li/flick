@@ -9,4 +9,5 @@
     <string name="pose_wavein">pose wavein</string>
     <string name="pose_waveout">pose waveout</string>
     <string name="pose_fingersspread">pose fingersspread</string>
+    <string name="title_activity_calibrate">CalibrateActivity</string>
 </resources>

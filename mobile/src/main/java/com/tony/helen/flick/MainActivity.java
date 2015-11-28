@@ -35,6 +35,9 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        gestureManager = new GestureManager(this);
+        //onScanActionSelected();
+
         final ActionBar actionBar = getActionBar();
         actionBar.setCustomView(R.layout.actionbar_custom_view_home);
         actionBar.setDisplayShowTitleEnabled(false);
@@ -42,14 +45,15 @@ public class MainActivity extends Activity {
         actionBar.setDisplayUseLogoEnabled(false);
         actionBar.setDisplayShowHomeEnabled(false);
 
+        Intent intent = new Intent(this, CalibrateActivity.class);
+        startActivity(intent);
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        gestureManager = new GestureManager(this);
-        //onScanActionSelected();
         myoInput = "hello world";
 
         speech_btn = (ImageButton) findViewById(R.id.speak_Btn);
