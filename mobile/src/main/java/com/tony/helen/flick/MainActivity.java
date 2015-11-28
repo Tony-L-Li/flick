@@ -1,7 +1,10 @@
 package com.tony.helen.flick;
 
+import android.Manifest;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,17 +31,30 @@ public class MainActivity extends Activity {
     String myoInput;
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        final ActionBar actionBar = getActionBar();
+        actionBar.setCustomView(R.layout.actionbar_custom_view_home);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayUseLogoEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
+
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
         gestureManager = new GestureManager(this);
-        onScanActionSelected();
+        //onScanActionSelected();
         myoInput = "hello world";
 
         speech_btn = (ImageButton) findViewById(R.id.speak_Btn);
 
-        //getSupportActionBar().setElevation(0);
-
+        getActionBar().setElevation(0);
 
         textEngine = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
