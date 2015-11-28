@@ -8,12 +8,12 @@
 
     <ImageButton
         android:background="@drawable/round_circle"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:paddingTop="48dp"
-        android:paddingBottom="48dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:paddingTop="63dp"
+        android:paddingBottom="63dp"
+        android:paddingLeft="28dp"
+        android:paddingRight="28dp"
         android:src="@drawable/logo"
         android:scaleType="fitXY"
         android:id="@+id/speak_Btn"
@@ -23,13 +23,15 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:layout_width="200dp"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Touch to record actions"
+        android:text="Activate MYO armband to initiate Flick."
         android:id="@+id/instructions_tv"
         android:layout_below="@+id/speak_Btn"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        />
 
 </RelativeLayout>

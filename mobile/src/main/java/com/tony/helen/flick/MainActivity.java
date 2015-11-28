@@ -1,6 +1,7 @@
 package com.tony.helen.flick;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -45,7 +46,12 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        final ActionBar actionBar = getActionBar();
+        actionBar.setCustomView(R.layout.actionbar_custom_view_home);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayUseLogoEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
 //        Intent checkIntent = new Intent();
 //        checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
 //        startActivityForResult(checkIntent, checkEngineStatus);
@@ -81,8 +87,7 @@ public class MainActivity extends Activity {
 
         speech_btn = (ImageButton) findViewById(R.id.speak_Btn);
 
-        //getSupportActionBar().setElevation(0);
-
+        getActionBar().setElevation(0);
 
         textEngine = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
