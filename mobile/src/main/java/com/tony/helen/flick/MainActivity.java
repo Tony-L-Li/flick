@@ -8,20 +8,16 @@ import android.speech.tts.TextToSpeech;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.util.Locale;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.thalmic.myo.AbstractDeviceListener;
 import com.thalmic.myo.DeviceListener;
@@ -32,6 +28,30 @@ import com.thalmic.myo.scanner.ScanActivity;
 
 public class MainActivity extends Activity {
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
+
+    // External Communication
+
+    private int checkEngineStatus;
+
+    // Activity Layout
+    TextToSpeech textEngine;
+
+    ImageButton speech_btn;
+
+    String myoInput;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+
+//        Intent checkIntent = new Intent();
+//        checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+//        startActivityForResult(checkIntent, checkEngineStatus);
+
+    }
+
 
     private DeviceListener mListener = new AbstractDeviceListener() {
         @Override
@@ -53,38 +73,16 @@ public class MainActivity extends Activity {
     };
 
 
-    // External Communication
-    private int checkEngineStatus;
-
-    // Activity Layout
-    TextToSpeech textEngine;
-
-    Button speech_btn;
-
-    String myoInput;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-<<<<<<< HEAD
-
-//        Intent checkIntent = new Intent();
-//        checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
-//        startActivityForResult(checkIntent, checkEngineStatus);
-
-    }
-
-
-
     @Override
     protected void onResume() {
         super.onResume();
 
         myoInput = "hello world";
 
-        speech_btn = (Button) findViewById(R.id.speak_Btn);
+        speech_btn = (ImageButton) findViewById(R.id.speak_Btn);
+
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+        getActionBar().hide();
 
         textEngine = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
@@ -102,35 +100,35 @@ public class MainActivity extends Activity {
                 textEngine.speak(myoInput, TextToSpeech.QUEUE_FLUSH, null);
             }
         });
-=======
-        Hub hub = Hub.getInstance();
-        if (!hub.init(this)) {
-            Log.e("myo", "Could not initialize the Hub.");
-            finish();
-            return;
-        }
 
-        hub.addListener(mListener);
+//        Hub hub = Hub.getInstance();
+//        if (!hub.init(this)) {
+//            Log.e("myo", "Could not initialize the Hub.");
+//            finish();
+//            return;
+//        }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("This app needs location access");
-                builder.setMessage("Please grant location access so this app can detect beacons.");
-                builder.setPositiveButton(android.R.string.ok, null);
-                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
-                    }
-                });
-                builder.show();
-            } else {
-                getMyo();
-            }
-        } else {
-            getMyo();
-        }
+//        hub.addListener(mListener);
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//                builder.setTitle("This app needs location access");
+//                builder.setMessage("Please grant location access so this app can detect beacons.");
+//                builder.setPositiveButton(android.R.string.ok, null);
+//                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//                    @Override
+//                    public void onDismiss(DialogInterface dialog) {
+//                        requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
+//                    }
+//                });
+//                builder.show();
+//            } else {
+//                getMyo();
+//            }
+//        } else {
+//            getMyo();
+//        }
     }
 
     public void getMyo() {
@@ -163,7 +161,6 @@ public class MainActivity extends Activity {
                 return;
             }
         }
->>>>>>> 75ce25c7e02a9adf576d6965e2667588435cfd43
     }
 
     @Override
