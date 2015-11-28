@@ -7,7 +7,7 @@
     tools:context="com.tony.helen.flick.CalibrateActivity"
     android:background="#cc000000">
 
-    <TextView android:text="Please hold your hand in front of you and make a fist" android:layout_width="wrap_content"
+    <TextView android:text="Please hold your phone next to the Myo Armband. Wait for a vibration." android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textSize="20dp"

@@ -25,13 +25,13 @@ public class CalibrateActivity extends Activity implements GestureManager.Gestur
         manager.unlock();
         manager.setListener(this);
         currentStage = 0;
-        calibrations = new Float[3][3];
+        calibrations = new Float[2][3];
 
     }
 
     @Override
-    public void onNewGesture(int newGesture) {
-        if (newGesture == 1) {
+    public void onNewGesture(GestureManager.Gesture newGesture) {
+        if (newGesture == GestureManager.Gesture.FIST) {
             Float[] temp = manager.getGyro();
 
             for (int i = 0; i < 3; i++) {
@@ -39,17 +39,19 @@ public class CalibrateActivity extends Activity implements GestureManager.Gestur
                 Log.d("myo", Float.toString(temp[i]));
             }
             if (currentStage == 0) {
-                instruct.setText("Please hold your hand to your chest and make a fist");
-            } else if (currentStage == 1) {
                 instruct.setText("Please lower your hand and make a fist");
-            } else if (currentStage == 2) {
+            } else if (currentStage == 1) {
                 manager.setGyroCalibrations(calibrations);
                 manager.lock();
                 finish();
             }
             currentStage++;
-
         }
+    }
+
+    @Override
+    public void onConnected() {
+        instruct.setText("Please hold your hand in front of you and make a fist");
     }
 
     @Override

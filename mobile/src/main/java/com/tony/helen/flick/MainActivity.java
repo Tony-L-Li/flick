@@ -96,14 +96,18 @@ public class MainActivity extends Activity implements Animation.AnimationListene
         speech_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                speech_btn.startAnimation(animZoomIn);
-                logo_img.startAnimation(animFadeOut);
-                instruction_tv.startAnimation(animFadeOut);
-
-                Toast.makeText(getApplicationContext(), myoInput, Toast.LENGTH_SHORT).show();
-                textEngine.speak(myoInput, TextToSpeech.QUEUE_FLUSH, null);
+                unlockSpeech();
             }
         });
+    }
+
+    public void unlockSpeech() {
+        speech_btn.startAnimation(animZoomIn);
+        logo_img.startAnimation(animFadeOut);
+        instruction_tv.startAnimation(animFadeOut);
+
+        Toast.makeText(getApplicationContext(), myoInput, Toast.LENGTH_SHORT).show();
+        textEngine.speak(myoInput, TextToSpeech.QUEUE_FLUSH, null);
     }
 
     @Override
@@ -138,14 +142,17 @@ public class MainActivity extends Activity implements Animation.AnimationListene
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
     }
-    private void onScanActionSelected() {
-        // Launch the ScanActivity to scan for Myos to connect to.
-        Intent intent = new Intent(this, ScanActivity.class);
-        startActivity(intent);
+
+    @Override
+    public void onNewGesture(GestureManager.Gesture newGesture) {
+        Log.d("myo", newGesture.action());
+        if (newGesture == GestureManager.Gesture.UNLOCK) {
+            unlockSpeech();
+        }
     }
 
     @Override
-    public void onNewGesture(int newGesture) {
-        Log.d("myo", "it works");
+    public void onConnected() {
+
     }
 }
