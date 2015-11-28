@@ -66,9 +66,15 @@ public class GestureManager {
         gyroCalibrations = new Float[2][3];
         gesturePhrases = new String[8];
         listener = null;
-        for (int i = 0; i < 8; i++) {
-            gesturePhrases[i] = "testing";
-        }
+
+        gesturePhrases[0] = "Hello";
+        gesturePhrases[1] = "Goodbye";
+        gesturePhrases[2] = "Where is the washroom";
+        gesturePhrases[3] = "Excuse me";
+        gesturePhrases[4] = "Can I get a coffee please";
+        gesturePhrases[5] = "When is the next bus coming";
+        gesturePhrases[6] = "Someone help me";
+        gesturePhrases[7] = "Bill please";
 
         hub = Hub.getInstance();
         if (!hub.init(context, context.getPackageName())) {
@@ -83,6 +89,14 @@ public class GestureManager {
             instance = new GestureManager(context);
         }
         return instance;
+    }
+
+    public String getPhrase(Gesture gesture) {
+        return gesturePhrases[gesture.index()];
+    }
+
+    public void setPhrase(Gesture gesture, String phrase) {
+        gesturePhrases[gesture.index()] = phrase;
     }
 
     public void setGyroCalibrations(Float[][] calibrations) {

@@ -104,8 +104,7 @@ public class MainActivity extends Activity implements Animation.AnimationListene
         logo_img.startAnimation(animFadeOut);
         instruction_tv.startAnimation(animFadeOut);
 
-        Toast.makeText(getApplicationContext(), myoInput, Toast.LENGTH_SHORT).show();
-        textEngine.speak(myoInput, TextToSpeech.QUEUE_FLUSH, null);
+        //textEngine.speak(myoInput, TextToSpeech.QUEUE_FLUSH, null);
     }
 
     @Override
@@ -146,6 +145,9 @@ public class MainActivity extends Activity implements Animation.AnimationListene
         Log.d("myo", newGesture.action());
         if (newGesture == GestureManager.Gesture.UNLOCK) {
             unlockSpeech();
+        } else if (newGesture != GestureManager.Gesture.FIST && newGesture != GestureManager.Gesture.LOCK) {
+            Toast.makeText(getApplicationContext(), myoInput, Toast.LENGTH_SHORT).show();
+            textEngine.speak(gestureManager.getPhrase(newGesture), TextToSpeech.QUEUE_FLUSH, null);
         }
     }
 
