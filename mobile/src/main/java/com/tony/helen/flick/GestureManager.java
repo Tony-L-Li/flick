@@ -12,6 +12,8 @@ import com.thalmic.myo.Pose;
 import com.thalmic.myo.Quaternion;
 import com.thalmic.myo.XDirection;
 
+import java.util.ArrayList;
+
 /**
  * Created by tli on 2015-11-28.
  */
@@ -21,14 +23,10 @@ public class GestureManager {
         FRONT_IN ("front wave in", 1),
         FRONT_FIST("front fist", 2),
         FRONT_SPREAD("front fingers spread", 3),
-        CHEST_OUT ("chest wave out", 0),
-        CHEST_IN ("chest wave in", 1),
-        CHEST_FIST("chest fist", 2),
-        CHEST_SPREAD("chest fingers spread", 3),
-        DOWN_OUT ("lower wave out", 0),
-        DOWN_IN ("lower wave in", 1),
-        DOWN_FIST("lower fist", 2),
-        DOWN_SPREAD("lower fingers spread", 3),
+        DOWN_OUT ("lower wave out", 4),
+        DOWN_IN ("lower wave in", 5),
+        DOWN_FIST("lower fist", 6),
+        DOWN_SPREAD("lower fingers spread", 7),
         LOCK("locked", 13),
         UNLOCK("unlocked", 14),
         FIST("fist", 15);
@@ -65,10 +63,10 @@ public class GestureManager {
         pitch = 0f;
         yaw = 0f;
         isCalibrated = false;
-        gyroCalibrations = new Float[3][3];
-        gesturePhrases = new String[15];
+        gyroCalibrations = new Float[2][3];
+        gesturePhrases = new String[8];
         listener = null;
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 8; i++) {
             gesturePhrases[i] = "testing";
         }
 
@@ -100,7 +98,8 @@ public class GestureManager {
         this.listener = listener;
     }
     public interface GestureListener {
-        void onNewGesture(int newGesture);
+        void onNewGesture(Gesture newGesture);
+        void onConnected();
     }
 
     public void setGyro(float roll, float pitch, float yaw) {
@@ -116,6 +115,7 @@ public class GestureManager {
         @Override
         public void onConnect(Myo myo, long timestamp) {
             // Set the text color of the text view to cyan when a Myo connects.
+            listener.onConnected();
         }
         // onDisconnect() is called whenever a Myo has been disconnected.
         @Override
@@ -138,11 +138,16 @@ public class GestureManager {
         // policy, that means poses will now be delivered to the listener.
         @Override
         public void onUnlock(Myo myo, long timestamp) {
+            Log.d("myo", "unlock");
+            hub.setLockingPolicy(Hub.LockingPolicy.NONE);
+            listener.onNewGesture(Gesture.UNLOCK);
         }
         // onLock() is called whenever a synced Myo has been locked. Under the standard locking
         // policy, that means poses will no longer be delivered to the listener.
         @Override
         public void onLock(Myo myo, long timestamp) {
+            Log.d("myo", "lock");
+            listener.onNewGesture(Gesture.LOCK);
         }
         // onOrientationData() is called whenever a Myo provides its current orientation,
         // represented as a quaternion.
@@ -164,6 +169,19 @@ public class GestureManager {
                 pitch *= -1;
             }
             GestureManager.getInstance(null).setGyro(roll, pitch, yaw);
+
+            int threshold = 30;
+            if (isCalibrated) {
+                for (int i = 0; i < 2; i++) {
+                    if (Math.abs(roll - gyroCalibrations[i][0]) < threshold &&
+                            Math.abs(pitch - gyroCalibrations[i][1]) < threshold &&
+                            Math.abs(yaw - gyroCalibrations[i][2]) < threshold) {
+                        currentOrientation = i;
+                        //Log.d("myo", Integer.toString(i));
+                        break;
+                    }
+                }
+            }
         }
 
         // onPose() is called whenever a Myo provides a new pose.
@@ -185,18 +203,37 @@ public class GestureManager {
                         }
                         break;
                     case FIST:
-
+                        if (currentOrientation == 0) {
+                            listener.onNewGesture(Gesture.FRONT_FIST);
+                        } else {
+                            listener.onNewGesture(Gesture.DOWN_FIST);
+                        }
                         break;
                     case WAVE_IN:
+                        if (currentOrientation == 0) {
+                            listener.onNewGesture(Gesture.FRONT_IN);
+                        } else {
+                            listener.onNewGesture(Gesture.DOWN_IN);
+                        }
                         break;
                     case WAVE_OUT:
+                        if (currentOrientation == 0) {
+                            listener.onNewGesture(Gesture.FRONT_OUT);
+                        } else {
+                            listener.onNewGesture(Gesture.DOWN_OUT);
+                        }
                         break;
                     case FINGERS_SPREAD:
+                        if (currentOrientation == 0) {
+                            listener.onNewGesture(Gesture.FRONT_SPREAD);
+                        } else {
+                            listener.onNewGesture(Gesture.DOWN_SPREAD);
+                        }
                         break;
                 }
             } else {
                 if (pose == Pose.FIST) {
-                    listener.onNewGesture();
+                    listener.onNewGesture(Gesture.FIST);
                 }
             }
             if (pose != Pose.UNKNOWN && pose != Pose.REST) {
@@ -220,6 +257,11 @@ public class GestureManager {
 
     public void lock() {
         hub.setLockingPolicy(Hub.LockingPolicy.STANDARD);
+//
+//        ArrayList<Myo> myos = hub.getConnectedDevices();
+//        if (myos.size() > 0) {
+//            myos.get(0).lock();
+//        }
     }
 
     public void destroyListener() {
