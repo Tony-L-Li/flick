@@ -81,8 +81,8 @@ public class MainActivity extends Activity {
 
         speech_btn = (ImageButton) findViewById(R.id.speak_Btn);
 
-        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-        getActionBar().hide();
+        //getSupportActionBar().setElevation(0);
+
 
         textEngine = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
