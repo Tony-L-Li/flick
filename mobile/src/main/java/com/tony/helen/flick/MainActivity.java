@@ -1,11 +1,10 @@
 package com.tony.helen.flick;
 
-import android.Manifest;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,7 +19,7 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
-public class MainActivity extends Activity implements Animation.AnimationListener {
+public class MainActivity extends Activity implements Animation.AnimationListener, GestureManager.GestureListener {
     GestureManager gestureManager;
 
     // External Communication
@@ -59,10 +58,10 @@ public class MainActivity extends Activity implements Animation.AnimationListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        gestureManager = new GestureManager(this);
+        gestureManager = GestureManager.getInstance(this);
         //onScanActionSelected();
         Intent intent = new Intent(this, CalibrateActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 
     @Override
@@ -104,6 +103,7 @@ public class MainActivity extends Activity implements Animation.AnimationListene
             }
         });
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -115,6 +115,15 @@ public class MainActivity extends Activity implements Animation.AnimationListene
         }
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == 1) {
+            gestureManager.setListener(this);
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -131,5 +140,10 @@ public class MainActivity extends Activity implements Animation.AnimationListene
         // Launch the ScanActivity to scan for Myos to connect to.
         Intent intent = new Intent(this, ScanActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onNewGesture(int newGesture) {
+        Log.d("myo", "it works");
     }
 }

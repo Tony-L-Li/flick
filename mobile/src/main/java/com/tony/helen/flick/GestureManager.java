@@ -21,16 +21,17 @@ public class GestureManager {
         FRONT_IN ("front wave in", 1),
         FRONT_FIST("front fist", 2),
         FRONT_SPREAD("front fingers spread", 3),
-        IN_OUT ("front wave out", 0),
-        IN_IN ("front wave in", 1),
-        IN_FIST("front fist", 2),
-        IN_SPREAD("front fingers spread", 3),
-        DOWN_OUT ("front wave out", 0),
-        DOWN_IN ("front wave in", 1),
-        DOWN_FIST("front fist", 2),
-        DOWN_SPREAD("front fingers spread", 3),
+        CHEST_OUT ("chest wave out", 0),
+        CHEST_IN ("chest wave in", 1),
+        CHEST_FIST("chest fist", 2),
+        CHEST_SPREAD("chest fingers spread", 3),
+        DOWN_OUT ("lower wave out", 0),
+        DOWN_IN ("lower wave in", 1),
+        DOWN_FIST("lower fist", 2),
+        DOWN_SPREAD("lower fingers spread", 3),
         LOCK("locked", 13),
-        UNLOCK("unlocked", 14);
+        UNLOCK("unlocked", 14),
+        FIST("fist", 15);
 
         private final String action;
         private final int index;
@@ -52,9 +53,19 @@ public class GestureManager {
     Hub hub;
     GestureListener listener;
     private String[] gesturePhrases;
-    private float roll, pitch, yaw;
+    private static GestureManager instance = null;
+    private Float[][] gyroCalibrations;
+    private boolean isCalibrated;
+    private Float roll, pitch, yaw;
+    private int currentOrientation;
 
-    public GestureManager(Context context) {
+    protected GestureManager(Context context) {
+        int currentOrientation = 0;
+        roll = 0f;
+        pitch = 0f;
+        yaw = 0f;
+        isCalibrated = false;
+        gyroCalibrations = new Float[3][3];
         gesturePhrases = new String[15];
         listener = null;
         for (int i = 0; i < 15; i++) {
@@ -65,8 +76,24 @@ public class GestureManager {
         if (!hub.init(context, context.getPackageName())) {
             return;
         }
-
+        hub.attachToAdjacentMyo();
         hub.addListener(mListener);
+    }
+
+    public static GestureManager getInstance(Context context) {
+        if(instance == null) {
+            instance = new GestureManager(context);
+        }
+        return instance;
+    }
+
+    public void setGyroCalibrations(Float[][] calibrations) {
+        gyroCalibrations = calibrations;
+        isCalibrated = true;
+    }
+
+    public Float[] getGyro() {
+        return new Float[]{roll, pitch, yaw};
     }
 
     public void setListener(GestureListener listener) {
@@ -74,6 +101,12 @@ public class GestureManager {
     }
     public interface GestureListener {
         void onNewGesture(int newGesture);
+    }
+
+    public void setGyro(float roll, float pitch, float yaw) {
+        this.roll = roll;
+        this.pitch = pitch;
+        this.yaw = yaw;
     }
 
     // Classes that inherit from AbstractDeviceListener can be used to receive events from Myo devices.
@@ -124,12 +157,13 @@ public class GestureManager {
             float pitch = (float) Math.toDegrees(Quaternion.pitch(rotation));
             float yaw = (float) Math.toDegrees(Quaternion.yaw(rotation));
 
-            Log.d("myo", String.format("%s %s %s", roll, pitch, yaw));
+            //Log.d("myo", String.format("%s %s %s", roll, pitch, yaw));
             // Adjust roll and pitch for the orientation of the Myo on the arm.
             if (myo.getXDirection() == XDirection.TOWARD_ELBOW) {
                 roll *= -1;
                 pitch *= -1;
             }
+            GestureManager.getInstance(null).setGyro(roll, pitch, yaw);
         }
 
         // onPose() is called whenever a Myo provides a new pose.
@@ -137,30 +171,33 @@ public class GestureManager {
         public void onPose(Myo myo, long timestamp, Pose pose) {
             // Handle the cases of the Pose enumeration, and change the text of the text view
             // based on the pose we receive.
+            if (isCalibrated) {
+                switch (pose) {
+                    case UNKNOWN:
+                        break;
+                    case REST:
+                    case DOUBLE_TAP:
+                        switch (myo.getArm()) {
+                            case LEFT:
+                                break;
+                            case RIGHT:
+                                break;
+                        }
+                        break;
+                    case FIST:
 
-            switch (pose) {
-                case UNKNOWN:
-                    break;
-                case REST:
-                case DOUBLE_TAP:
-                    int restTextId = R.string.hello_world;
-                    switch (myo.getArm()) {
-                        case LEFT:
-                            restTextId = R.string.arm_left;
-                            break;
-                        case RIGHT:
-                            restTextId = R.string.arm_right;
-                            break;
-                    }
-                    break;
-                case FIST:
-                    break;
-                case WAVE_IN:
-                    break;
-                case WAVE_OUT:
-                    break;
-                case FINGERS_SPREAD:
-                    break;
+                        break;
+                    case WAVE_IN:
+                        break;
+                    case WAVE_OUT:
+                        break;
+                    case FINGERS_SPREAD:
+                        break;
+                }
+            } else {
+                if (pose == Pose.FIST) {
+                    listener.onNewGesture();
+                }
             }
             if (pose != Pose.UNKNOWN && pose != Pose.REST) {
                 // Tell the Myo to stay unlocked until told otherwise. We do that here so you can
@@ -177,7 +214,13 @@ public class GestureManager {
         }
     };
 
+    public void unlock() {
+        hub.setLockingPolicy(Hub.LockingPolicy.NONE);
+    }
 
+    public void lock() {
+        hub.setLockingPolicy(Hub.LockingPolicy.STANDARD);
+    }
 
     public void destroyListener() {
         hub.removeListener(mListener);

@@ -5,10 +5,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.tony.helen.flick.CalibrateActivity"
-    android:background="#55000000">
+    android:background="#cc000000">
 
     <TextView android:text="Please hold your hand in front of you and make a fist" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:textSize="20dp"
+        android:id="@+id/instructions"
+        android:gravity="center"
+        android:width="250dp"/>
 
 </RelativeLayout>
