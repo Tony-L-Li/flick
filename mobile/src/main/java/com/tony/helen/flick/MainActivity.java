@@ -9,14 +9,18 @@ import android.speech.tts.TextToSpeech;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import com.thalmic.myo.scanner.ScanActivity;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Locale;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements Animation.AnimationListener {
     GestureManager gestureManager;
 
     // External Communication
@@ -27,8 +31,28 @@ public class MainActivity extends Activity {
     TextToSpeech textEngine;
 
     ImageButton speech_btn;
+    ImageView logo_img;
+    TextView instruction_tv;
 
     String myoInput;
+
+    Animation animZoomIn;
+    Animation animFadeOut;
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+        //Animation ended
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+        // Animation is repeating
+    }
+
+    @Override
+    public void onAnimationStart(Animation animation) {
+        // Animation started
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,17 +61,8 @@ public class MainActivity extends Activity {
 
         gestureManager = new GestureManager(this);
         //onScanActionSelected();
-
-        final ActionBar actionBar = getActionBar();
-        actionBar.setCustomView(R.layout.actionbar_custom_view_home);
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayUseLogoEnabled(false);
-        actionBar.setDisplayShowHomeEnabled(false);
-
         Intent intent = new Intent(this, CalibrateActivity.class);
         startActivity(intent);
-
     }
 
     @Override
@@ -57,8 +72,16 @@ public class MainActivity extends Activity {
         myoInput = "hello world";
 
         speech_btn = (ImageButton) findViewById(R.id.speak_Btn);
+        logo_img = (ImageView) findViewById(R.id.logo_img);
+        instruction_tv = (TextView) findViewById(R.id.instructions_tv);
 
-        getActionBar().setElevation(0);
+        getActionBar().hide();
+
+        animZoomIn = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoom_in);
+        animZoomIn.setAnimationListener(this);
+
+        animFadeOut = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_out);
+        animFadeOut.setAnimationListener(this);
 
         textEngine = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
@@ -72,11 +95,14 @@ public class MainActivity extends Activity {
         speech_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                speech_btn.startAnimation(animZoomIn);
+                logo_img.startAnimation(animFadeOut);
+                instruction_tv.startAnimation(animFadeOut);
+
                 Toast.makeText(getApplicationContext(), myoInput, Toast.LENGTH_SHORT).show();
                 textEngine.speak(myoInput, TextToSpeech.QUEUE_FLUSH, null);
             }
         });
-
     }
     @Override
     protected void onDestroy() {
