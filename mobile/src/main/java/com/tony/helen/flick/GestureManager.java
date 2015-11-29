@@ -129,6 +129,7 @@ public class GestureManager {
         @Override
         public void onConnect(Myo myo, long timestamp) {
             // Set the text color of the text view to cyan when a Myo connects.
+            Log.d("myo", "CONNECTED");
             listener.onConnected();
         }
         // onDisconnect() is called whenever a Myo has been disconnected.

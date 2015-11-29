@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
@@ -34,6 +36,7 @@ public class MainActivity extends Activity implements Animation.AnimationListene
     TextView instruction_tv;
     ImageView settings_iv;
     ImageView sync_iv;
+    ImageView blanket;
 
     String myoInput;
 
@@ -45,7 +48,9 @@ public class MainActivity extends Activity implements Animation.AnimationListene
     public void onAnimationEnd(Animation animation) {
         //Animation ended
         if (animation.toString().equals(animZoomIn.toString())) {
+            blanket.setVisibility(View.VISIBLE);
             onPage = false;
+            logo_img.setVisibility(View.GONE);
             //View view = findViewById(R.id.mainView);
             //view.setBackgroundColor(Color.parseColor("#905778db"));
             Intent intent  = new Intent(getApplicationContext(), SpeakActivity.class);
@@ -67,8 +72,10 @@ public class MainActivity extends Activity implements Animation.AnimationListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        blanket = (ImageView) findViewById(R.id.blanket);
         onPage = false;
         gestureManager = GestureManager.getInstance(this);
+        gestureManager.setListener(this);
         //onScanActionSelected();
     }
 
@@ -84,6 +91,11 @@ public class MainActivity extends Activity implements Animation.AnimationListene
         settings_iv = (ImageView) findViewById(R.id.settings_iv);
         sync_iv = (ImageView) findViewById(R.id.sync_iv);
 
+        Window window = this.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(Color.parseColor("#00ffffff"));
+
         getActionBar().hide();
 
         animZoomIn = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoom_in);
@@ -97,7 +109,7 @@ public class MainActivity extends Activity implements Animation.AnimationListene
             public void onClick(View v) {
                 onPage = false;
                 Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -147,6 +159,8 @@ public class MainActivity extends Activity implements Animation.AnimationListene
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        blanket.setVisibility(View.GONE);
+        logo_img.setVisibility(View.VISIBLE);
         onPage = true;
         // Check which request we're responding to
         if (requestCode == 1 || requestCode == 2) {
@@ -169,6 +183,7 @@ public class MainActivity extends Activity implements Animation.AnimationListene
 
     @Override
     public void onNewGesture(GestureManager.Gesture newGesture) {
+        Log.d("myo", "work PLEASE");
         if (onPage && newGesture == GestureManager.Gesture.UNLOCK) {
             onPage = false;
             Log.d("myo", "STARTED SPEAK");
