@@ -94,20 +94,6 @@ public class MainActivity extends Activity implements Animation.AnimationListene
             }
         });
 
-        speech_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                unlockSpeech();
-            }
-        });
-
-        logo_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                unlockSpeech();
-            }
-        });
-
         settings_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,7 +120,6 @@ public class MainActivity extends Activity implements Animation.AnimationListene
             // The Activity is finishing, so shutdown the Hub. This will disconnect from the Myo.
             gestureManager.finishHub();
         }
-
     }
 
     @Override

@@ -30,7 +30,6 @@ public class SpeakActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        getActionBar().hide();
         settings_iv = (ImageView) findViewById(R.id.settings_iv);
         gesture_tv = (TextView) findViewById(R.id.gesture_tv);
 
@@ -41,7 +40,5 @@ public class SpeakActivity extends Activity {
                 startActivity(intent);
             }
         });
-
     }
-
 }
