@@ -66,8 +66,6 @@ public class MainActivity extends Activity implements Animation.AnimationListene
         onPage = false;
         gestureManager = GestureManager.getInstance(this);
         //onScanActionSelected();
-        Intent intent = new Intent(this, CalibrateActivity.class);
-        startActivityForResult(intent, 1);
     }
 
     @Override

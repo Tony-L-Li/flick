@@ -3,12 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:background="#5778db"
     tools:context="com.tony.helen.flick.SpeakActivity">
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:background="#ffffff"/>
+    <com.tony.helen.flick.BarGraph
+        android:layout_width="fill_parent"
+        android:layout_height="200dp" />
     <ImageView
         android:layout_width="35dp"
         android:layout_height="35dp"
@@ -52,5 +55,6 @@
             android:text="I would like to pay the bill now."
             android:textColor="#ecebeb"
             android:id="@+id/gesture_tv" />
+
     </LinearLayout>
 </RelativeLayout>
