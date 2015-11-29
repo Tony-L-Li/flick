@@ -38,14 +38,23 @@
         android:layout_centerHorizontal="true" />
 
     <ImageView
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginRight="10dp"
         android:clickable="true"
         android:scaleType="fitXY"
         android:id="@+id/settings_iv"
         android:src="@drawable/settings_icon"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/sync_iv" />
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="5dp"
+        android:clickable="true"
+        android:scaleType="fitXY"
+        android:id="@+id/sync_iv"
+        android:src="@drawable/sync_icon"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" />
 
