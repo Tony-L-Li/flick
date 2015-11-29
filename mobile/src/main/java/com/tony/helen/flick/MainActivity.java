@@ -32,6 +32,7 @@ public class MainActivity extends Activity implements Animation.AnimationListene
     ImageView logo_img;
     TextView instruction_tv;
     ImageView settings_iv;
+    ImageView sync_iv;
 
     String myoInput;
 
@@ -63,11 +64,6 @@ public class MainActivity extends Activity implements Animation.AnimationListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        onPage = false;
-        gestureManager = GestureManager.getInstance(this);
-        //onScanActionSelected();
-        Intent intent = new Intent(this, CalibrateActivity.class);
-        startActivityForResult(intent, 1);
     }
 
     @Override
@@ -80,6 +76,7 @@ public class MainActivity extends Activity implements Animation.AnimationListene
         logo_img = (ImageView) findViewById(R.id.logo_img);
         instruction_tv = (TextView) findViewById(R.id.instructions_tv);
         settings_iv = (ImageView) findViewById(R.id.settings_iv);
+        sync_iv = (ImageView) findViewById(R.id.sync_iv);
 
         getActionBar().hide();
 
@@ -97,6 +94,18 @@ public class MainActivity extends Activity implements Animation.AnimationListene
                 startActivity(intent);
             }
         });
+
+        sync_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPage = false;
+                gestureManager = GestureManager.getInstance(getApplicationContext());
+                //onScanActionSelected();
+                Intent intent = new Intent(getApplicationContext(), CalibrateActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+
     }
 
     public void unlockSpeech() {

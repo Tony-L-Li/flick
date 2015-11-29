@@ -70,6 +70,11 @@ public class SpeakActivity extends Activity implements GestureManager.GestureLis
         } else if (newGesture != GestureManager.Gesture.FIST && newGesture != GestureManager.Gesture.LOCK) {
             Log.d("myo", manager.getPhrase(newGesture));
             gesture_tv.setText(manager.getPhrase(newGesture));
+
+            Typewriter writer = new Typewriter(this);
+            writer.setCharacterDelay(150);
+            writer.animateText("Sample String");
+
             //textEngine.speak(manager.getPhrase(newGesture), TextToSpeech.QUEUE_FLUSH, null);
             textEngine.synthesizeToFile(manager.getPhrase(newGesture),
                     null,
