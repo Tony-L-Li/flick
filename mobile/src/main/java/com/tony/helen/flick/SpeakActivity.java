@@ -1,8 +1,13 @@
 package com.tony.helen.flick;
 
+import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.media.audiofx.Visualizer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
+import android.os.Environment;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
@@ -17,6 +22,7 @@ import android.widget.Toast;
 import com.thalmic.myo.Hub;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Locale;
 
 public class SpeakActivity extends Activity implements GestureManager.GestureListener{
@@ -25,12 +31,16 @@ public class SpeakActivity extends Activity implements GestureManager.GestureLis
     TextView gesture_tv;
     GestureManager manager;
     TextToSpeech textEngine;
+    String audioPath;
+    Visualizer visual;
+    MediaPlayer voicePlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_speak);
 
+        setContentView(R.layout.activity_speak);
+        audioPath = this.getDir("soundfiles", Context.MODE_WORLD_WRITEABLE).getAbsolutePath() + File.separator +  "audio.mp3";
         settings_iv = (ImageView) findViewById(R.id.settings_iv);
         gesture_tv = (TextView) findViewById(R.id.gesture_tv);
 
@@ -45,7 +55,6 @@ public class SpeakActivity extends Activity implements GestureManager.GestureLis
                 }
             }
         });
-        textEngine.setOnUtteranceProgressListener(audioListener);
     }
 
     @Override
@@ -72,29 +81,9 @@ public class SpeakActivity extends Activity implements GestureManager.GestureLis
         } else if (newGesture != GestureManager.Gesture.FIST && newGesture != GestureManager.Gesture.LOCK) {
             Log.d("myo", manager.getPhrase(newGesture));
             gesture_tv.setText(manager.getPhrase(newGesture));
-            //textEngine.speak(manager.getPhrase(newGesture), TextToSpeech.QUEUE_FLUSH, null);
-            textEngine.synthesizeToFile(manager.getPhrase(newGesture),
-                    null,
-                    new File("/sdcard/myAppCache/wakeUp.wav"), "no");
+            textEngine.speak(manager.getPhrase(newGesture), TextToSpeech.QUEUE_FLUSH, null);
         }
     }
-
-    private UtteranceProgressListener audioListener = new UtteranceProgressListener() {
-        @Override
-        public void onStart(String utteranceId) {
-
-        }
-
-        @Override
-        public void onDone(String utteranceId) {
-            Log.d("myo", "AUDIO IS READY");
-        }
-
-        @Override
-        public void onError(String utteranceId) {
-
-        }
-    };
 
     @Override
     public void onConnected() {
