@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
-import com.thalmic.myo.scanner.ScanActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,6 +31,7 @@ public class MainActivity extends Activity implements Animation.AnimationListene
     ImageButton speech_btn;
     ImageView logo_img;
     TextView instruction_tv;
+    ImageView settings_iv;
 
     String myoInput;
 
@@ -41,6 +41,8 @@ public class MainActivity extends Activity implements Animation.AnimationListene
     @Override
     public void onAnimationEnd(Animation animation) {
         //Animation ended
+        Intent intent  = new Intent(getApplicationContext(), SpeakActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -73,6 +75,7 @@ public class MainActivity extends Activity implements Animation.AnimationListene
         speech_btn = (ImageButton) findViewById(R.id.speak_Btn);
         logo_img = (ImageView) findViewById(R.id.logo_img);
         instruction_tv = (TextView) findViewById(R.id.instructions_tv);
+        settings_iv = (ImageView) findViewById(R.id.settings_iv);
 
         getActionBar().hide();
 
@@ -95,6 +98,21 @@ public class MainActivity extends Activity implements Animation.AnimationListene
             @Override
             public void onClick(View v) {
                 unlockSpeech();
+            }
+        });
+
+        logo_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                unlockSpeech();
+            }
+        });
+
+        settings_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(intent);
             }
         });
     }
