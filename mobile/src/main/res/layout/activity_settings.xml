@@ -3,10 +3,437 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.tony.helen.flick.SettingsActivity">
+    tools:context="com.tony.helen.flick.SettingsActivity"
+    android:background="#ffffff"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView"
+        android:fillViewport="true"
+        >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Foreward movement"
+            android:id="@+id/forward_tv"
+            android:textSize="15dp"
+            android:textColor="#5778db"
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignEnd="@+id/linearLayout"
+            android:background="#ffffff"
+            >
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/hand_fist_icon"
+                    android:scaleType="fitXY"
+                    android:id="@+id/hand_iv1_1"
+                    />
+
+                <TextView
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:text="phrase 1: Hello my name is helen"
+                    android:maxLines="1"
+                    android:textColor="#404040"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/phrase_tv1_1"
+                    android:textSize="17dp"
+                    android:gravity="center_vertical"
+                    />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/grey_line"
+
+                />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/hand_spread_icon"
+                    android:scaleType="fitXY"
+                    android:id="@+id/hand_iv1_2"
+                    />
+
+                <TextView
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="phrase 2: Hello my name is helen"
+                    android:maxLines="1"
+                    android:textColor="#404040"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/phrase_tv1_2"
+                    android:textSize="17dp"
+                    android:gravity="center_vertical"
+                    />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/grey_line"
+
+                />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/hand_right_icon"
+                    android:scaleType="fitXY"
+                    android:id="@+id/hand_iv1_3"
+                    />
+
+                <TextView
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:text="phrase 3: Hello my name is helen"
+                    android:maxLines="1"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="#404040"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/phrase_tv1_3"
+                    android:textSize="17dp"
+                    android:gravity="center_vertical"
+                    />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/grey_line"
+
+                />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/hand_left_icon"
+                    android:scaleType="fitXY"
+                    android:id="@+id/hand_iv1_4"
+                    />
+
+                <TextView
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:text="phrase 4: Hello my name is helen"
+                    android:maxLines="1"
+                    android:textColor="#404040"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/phrase_tv1_4"
+                    android:textSize="17dp"
+                    android:gravity="center_vertical"
+                    />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/grey_line"
+
+                />
+
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/light_grey_line"
+            android:elevation="5dp"
+
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lower movement"
+            android:id="@+id/lower_tv"
+            android:textSize="15dp"
+            android:textColor="#5778db"
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="25dp"
+            android:gravity="center_vertical"
+            />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignEnd="@+id/linearLayout"
+            android:background="#ffffff"
+            >
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/hand_fist_icon"
+                    android:scaleType="fitXY"
+                    android:id="@+id/hand_iv2_1"
+                    />
+
+                <TextView
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:text="phrase 1: Hello my name is helen"
+                    android:maxLines="1"
+                    android:textColor="#404040"
+                    android:paddingLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/phrase_tv2_1"
+                    android:textSize="17dp"
+                    android:gravity="center_vertical"
+                    />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/grey_line"
+
+                />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/hand_spread_icon"
+                    android:scaleType="fitXY"
+                    android:id="@+id/hand_iv2_2"
+                    />
+
+                <TextView
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:text="phrase 2: Hello my name is helen"
+                    android:maxLines="1"
+                    android:textColor="#404040"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/phrase_tv2_2"
+                    android:textSize="17dp"
+                    android:gravity="center_vertical"
+                    />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/grey_line"
+
+                />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/hand_right_icon"
+                    android:scaleType="fitXY"
+                    android:id="@+id/hand_iv2_3"
+                    />
+
+                <TextView
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:text="phrase 3: Hello my name is helen"
+                    android:maxLines="1"
+                    android:textColor="#404040"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:id="@+id/phrase_tv2_3"
+                    android:textSize="17dp"
+                    android:gravity="center_vertical"
+                    />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/grey_line"
+
+                />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/hand_left_icon"
+                    android:scaleType="fitXY"
+                    android:id="@+id/hand_iv2_4"
+                    />
+
+                <TextView
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:text="phrase 4: Hello my name is helen"
+                    android:maxLines="1"
+                    android:textColor="#404040"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/phrase_tv2_4"
+                    android:textSize="17dp"
+                    android:gravity="center_vertical"
+                    />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/grey_line"
+
+                />
+
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+
+    </ScrollView>
 
 </RelativeLayout>
