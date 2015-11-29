@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -44,6 +45,7 @@ public class SpeakActivity extends Activity implements GestureManager.GestureLis
                 }
             }
         });
+        textEngine.setOnUtteranceProgressListener(audioListener);
     }
 
     @Override
@@ -76,6 +78,23 @@ public class SpeakActivity extends Activity implements GestureManager.GestureLis
                     new File("/sdcard/myAppCache/wakeUp.wav"), "no");
         }
     }
+
+    private UtteranceProgressListener audioListener = new UtteranceProgressListener() {
+        @Override
+        public void onStart(String utteranceId) {
+
+        }
+
+        @Override
+        public void onDone(String utteranceId) {
+            Log.d("myo", "AUDIO IS READY");
+        }
+
+        @Override
+        public void onError(String utteranceId) {
+
+        }
+    };
 
     @Override
     public void onConnected() {
