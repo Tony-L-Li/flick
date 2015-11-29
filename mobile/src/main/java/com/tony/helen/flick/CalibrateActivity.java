@@ -1,6 +1,7 @@
 package com.tony.helen.flick;
 
 import android.app.Activity;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ public class CalibrateActivity extends Activity implements GestureManager.Gestur
     private GestureManager manager;
     private TextView instruct;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +28,6 @@ public class CalibrateActivity extends Activity implements GestureManager.Gestur
         manager.setListener(this);
         currentStage = 0;
         calibrations = new Float[2][3];
-
     }
 
     @Override

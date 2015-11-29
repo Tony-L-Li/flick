@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.Environment;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
@@ -34,12 +35,23 @@ public class SpeakActivity extends Activity implements GestureManager.GestureLis
     String audioPath;
     Visualizer visual;
     MediaPlayer voicePlayer;
+    private Handler handler;
+    private Runnable delayedFinish;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_speak);
+        handler = new Handler();
+        delayedFinish = new Runnable() {
+            @Override
+            public void run() {
+                setResult(Activity.RESULT_OK);
+                finish();
+            }
+        };
+        handler.postDelayed(delayedFinish, 5000);
         settings_iv = (ImageView) findViewById(R.id.settings_iv);
 //        gesture_tv = (TextView) findViewById(R.id.gesture_tv);
 
@@ -74,10 +86,10 @@ public class SpeakActivity extends Activity implements GestureManager.GestureLis
 
         if (newGesture == GestureManager.Gesture.UNLOCK) {
             Log.d("myo", "unlock speak");
-            setResult(Activity.RESULT_OK);
-            finish();
             return;
         } else if (newGesture != GestureManager.Gesture.FIST && newGesture != GestureManager.Gesture.LOCK) {
+            handler.removeCallbacks(delayedFinish);
+            handler.postDelayed(delayedFinish, 5000);
             Log.d("myo", manager.getPhrase(newGesture));
             //gesture_tv.setText(manager.getPhrase(newGesture));
 
