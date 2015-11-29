@@ -10,6 +10,15 @@
     android:background="#5778db"
     tools:context="com.tony.helen.flick.SpeakActivity">
 
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:scaleType="fitXY"
+        android:clickable="true"
+        android:id="@+id/settings_iv"
+        android:src="@drawable/settings_light_icon"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
 
     <ImageView
         android:layout_width="80dp"
@@ -43,7 +52,7 @@
             android:textSize="40dp"
             android:text="I would like to pay the bill now."
             android:textColor="#ecebeb"
-            android:id="@+id/textView" />
+            android:id="@+id/gesture_tv" />
     </LinearLayout>
 
 
