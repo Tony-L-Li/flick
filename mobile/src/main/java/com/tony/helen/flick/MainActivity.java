@@ -71,6 +71,7 @@ public class MainActivity extends Activity implements Animation.AnimationListene
         setContentView(R.layout.activity_main);
         onPage = false;
         gestureManager = GestureManager.getInstance(this);
+        gestureManager.setListener(this);
         //onScanActionSelected();
     }
 
