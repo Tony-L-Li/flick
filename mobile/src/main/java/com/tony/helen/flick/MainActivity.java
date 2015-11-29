@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
@@ -83,6 +85,11 @@ public class MainActivity extends Activity implements Animation.AnimationListene
         instruction_tv = (TextView) findViewById(R.id.instructions_tv);
         settings_iv = (ImageView) findViewById(R.id.settings_iv);
         sync_iv = (ImageView) findViewById(R.id.sync_iv);
+
+        Window window = this.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(Color.parseColor("#00ffffff"));
 
         getActionBar().hide();
 

@@ -1,11 +1,14 @@
 package com.tony.helen.flick;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -26,6 +29,10 @@ public class CalibrateActivity extends Activity implements GestureManager.Gestur
         manager.setListener(this);
         currentStage = 0;
         calibrations = new Float[2][3];
+        Window window = this.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(Color.parseColor("#00ffffff"));
 
     }
 
