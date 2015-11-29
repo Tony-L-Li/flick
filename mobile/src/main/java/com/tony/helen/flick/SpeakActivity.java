@@ -84,7 +84,7 @@ public class SpeakActivity extends Activity implements GestureManager.GestureLis
             Typewriter gesture_tv = new Typewriter(this);
             gesture_tv = (Typewriter) findViewById(R.id.gesture_tv);
 
-            gesture_tv.setCharacterDelay(100);
+            gesture_tv.setCharacterDelay(30);
             gesture_tv.animateText(manager.getPhrase(newGesture));
 
             textEngine.speak(manager.getPhrase(newGesture), TextToSpeech.QUEUE_FLUSH, null);

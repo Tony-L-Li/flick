@@ -2,6 +2,7 @@ package com.tony.helen.flick;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -45,6 +46,8 @@ public class MainActivity extends Activity implements Animation.AnimationListene
         //Animation ended
         if (animation.toString().equals(animZoomIn.toString())) {
             onPage = false;
+            View view = findViewById(R.id.mainView);
+            view.setBackgroundColor(Color.parseColor("#905778db"));
             Intent intent  = new Intent(getApplicationContext(), SpeakActivity.class);
             startActivityForResult(intent, 2);
         }
@@ -105,6 +108,17 @@ public class MainActivity extends Activity implements Animation.AnimationListene
                 startActivityForResult(intent, 1);
             }
         });
+
+//        speech_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                speech_btn.startAnimation(animZoomIn);
+//                logo_img.startAnimation(animFadeOut);
+//                instruction_tv.startAnimation(animFadeOut);
+//                Intent intent = new Intent(getApplicationContext(), SpeakActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
     }
 

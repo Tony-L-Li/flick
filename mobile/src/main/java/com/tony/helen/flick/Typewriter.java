@@ -12,7 +12,7 @@ public class Typewriter extends TextView {
 
     private CharSequence mText;
     private int mIndex;
-    private long mDelay = 100; //Default 500ms delay
+    private long mDelay = 30; //Default 500ms delay
 
 
     public Typewriter(Context context) {
