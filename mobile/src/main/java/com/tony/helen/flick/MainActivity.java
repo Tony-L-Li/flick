@@ -121,7 +121,7 @@ public class MainActivity extends Activity implements Animation.AnimationListene
     protected void onDestroy() {
         super.onDestroy();
         // We don't want any callbacks when the Activity is gone, so unregister the listener.
-        gestureManager.destroyListener();
+        //gestureManager.destroyListener();
         if (isFinishing()) {
             // The Activity is finishing, so shutdown the Hub. This will disconnect from the Myo.
             gestureManager.finishHub();

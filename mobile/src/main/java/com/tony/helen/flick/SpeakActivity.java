@@ -1,9 +1,15 @@
 package com.tony.helen.flick;
 
+import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.media.audiofx.Visualizer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
+import android.os.Environment;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -16,22 +22,26 @@ import android.widget.Toast;
 import com.thalmic.myo.Hub;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Locale;
 
 public class SpeakActivity extends Activity implements GestureManager.GestureListener{
 
     ImageView settings_iv;
-    TextView gesture_tv;
+    //TextView gesture_tv;
     GestureManager manager;
     TextToSpeech textEngine;
+    String audioPath;
+    Visualizer visual;
+    MediaPlayer voicePlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_speak);
 
+        setContentView(R.layout.activity_speak);
         settings_iv = (ImageView) findViewById(R.id.settings_iv);
-        gesture_tv = (TextView) findViewById(R.id.gesture_tv);
+//        gesture_tv = (TextView) findViewById(R.id.gesture_tv);
 
         manager = GestureManager.getInstance(this);
         manager.setListener(this);
@@ -69,16 +79,16 @@ public class SpeakActivity extends Activity implements GestureManager.GestureLis
             return;
         } else if (newGesture != GestureManager.Gesture.FIST && newGesture != GestureManager.Gesture.LOCK) {
             Log.d("myo", manager.getPhrase(newGesture));
-            gesture_tv.setText(manager.getPhrase(newGesture));
+            //gesture_tv.setText(manager.getPhrase(newGesture));
 
-            Typewriter writer = new Typewriter(this);
-            writer.setCharacterDelay(150);
-            writer.animateText("Sample String");
+            Typewriter gesture_tv = new Typewriter(this);
+            gesture_tv = (Typewriter) findViewById(R.id.gesture_tv);
 
-            //textEngine.speak(manager.getPhrase(newGesture), TextToSpeech.QUEUE_FLUSH, null);
-            textEngine.synthesizeToFile(manager.getPhrase(newGesture),
-                    null,
-                    new File("/sdcard/myAppCache/wakeUp.wav"), "no");
+            gesture_tv.setCharacterDelay(100);
+            gesture_tv.animateText(manager.getPhrase(newGesture));
+
+            textEngine.speak(manager.getPhrase(newGesture), TextToSpeech.QUEUE_FLUSH, null);
+
         }
     }
 
