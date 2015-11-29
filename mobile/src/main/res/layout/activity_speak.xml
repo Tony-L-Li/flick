@@ -7,14 +7,17 @@
     tools:context="com.tony.helen.flick.SpeakActivity">
     <ImageView
         android:layout_width="fill_parent"
-        android:layout_height="200dp"
+        android:layout_height="260dp"
         android:background="#ffffff"/>
     <com.tony.helen.flick.BarGraph
         android:layout_width="fill_parent"
-        android:layout_height="200dp" />
+        android:layout_height="200dp"
+        android:layout_marginTop="65dp"/>
     <ImageView
         android:layout_width="35dp"
         android:layout_height="35dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
         android:scaleType="fitXY"
         android:clickable="true"
         android:id="@+id/settings_iv"
@@ -25,8 +28,10 @@
     <ImageView
         android:layout_width="80dp"
         android:layout_height="30dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
         android:id="@+id/logo_iv"
-        android:src="@drawable/logo"
+        android:src="@drawable/logo_blue"
         android:scaleType="fitXY"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
@@ -40,10 +45,10 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_height="260dp"
             android:id="@+id/imageView" />
 
-        <TextView
+        <com.tony.helen.flick.Typewriter
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
@@ -51,7 +56,7 @@
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="40dp"
+            android:textSize="45dp"
             android:text="I would like to pay the bill now."
             android:textColor="#ecebeb"
             android:id="@+id/gesture_tv" />

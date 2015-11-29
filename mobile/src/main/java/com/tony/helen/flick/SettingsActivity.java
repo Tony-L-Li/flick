@@ -34,7 +34,15 @@ public class SettingsActivity extends Activity {
         phrase_tv2_3 = (TextView) findViewById(R.id.phrase_tv2_3);
         phrase_tv2_4 = (TextView) findViewById(R.id.phrase_tv2_4);
 
+        phrase_tv1_1.setText("Where is the washroom");
+        phrase_tv1_2.setText("Excuse me");
+        phrase_tv1_3.setText("Hello");
+        phrase_tv1_4.setText("My name is Tony");
 
+        phrase_tv2_1.setText("Someone help me");
+        phrase_tv2_2.setText("Bill please");
+        phrase_tv2_3.setText("Can I get a coffee please");
+        phrase_tv2_4.setText("When is the next bus coming");
 
     }
 

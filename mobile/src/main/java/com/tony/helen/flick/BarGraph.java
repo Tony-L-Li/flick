@@ -17,7 +17,7 @@ public class BarGraph extends View {
     int maxHeight;
     float offset;
     ArrayList<Float> bars;
-    float offInc = 0.05f;
+    float offInc = 0.025f;
     int totalBars = 20;
     public BarGraph(Context context, AttributeSet attrs) {
         super(context);

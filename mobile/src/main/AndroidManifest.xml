@@ -30,6 +30,7 @@
             android:name=".SettingsActivity"
             android:label="SettingsActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
+
         </activity>
         <activity
             android:name=".SpeakActivity"

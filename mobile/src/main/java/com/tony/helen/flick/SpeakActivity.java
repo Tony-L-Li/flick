@@ -28,7 +28,7 @@ import java.util.Locale;
 public class SpeakActivity extends Activity implements GestureManager.GestureListener{
 
     ImageView settings_iv;
-    TextView gesture_tv;
+    //TextView gesture_tv;
     GestureManager manager;
     TextToSpeech textEngine;
     String audioPath;
@@ -40,9 +40,8 @@ public class SpeakActivity extends Activity implements GestureManager.GestureLis
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_speak);
-        audioPath = this.getDir("soundfiles", Context.MODE_WORLD_WRITEABLE).getAbsolutePath() + File.separator +  "audio.mp3";
         settings_iv = (ImageView) findViewById(R.id.settings_iv);
-        gesture_tv = (TextView) findViewById(R.id.gesture_tv);
+//        gesture_tv = (TextView) findViewById(R.id.gesture_tv);
 
         manager = GestureManager.getInstance(this);
         manager.setListener(this);
@@ -80,8 +79,16 @@ public class SpeakActivity extends Activity implements GestureManager.GestureLis
             return;
         } else if (newGesture != GestureManager.Gesture.FIST && newGesture != GestureManager.Gesture.LOCK) {
             Log.d("myo", manager.getPhrase(newGesture));
-            gesture_tv.setText(manager.getPhrase(newGesture));
+            //gesture_tv.setText(manager.getPhrase(newGesture));
+
+            Typewriter gesture_tv = new Typewriter(this);
+            gesture_tv = (Typewriter) findViewById(R.id.gesture_tv);
+
+            gesture_tv.setCharacterDelay(30);
+            gesture_tv.animateText(manager.getPhrase(newGesture));
+
             textEngine.speak(manager.getPhrase(newGesture), TextToSpeech.QUEUE_FLUSH, null);
+
         }
     }
 

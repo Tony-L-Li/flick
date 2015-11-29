@@ -2,6 +2,7 @@ package com.tony.helen.flick;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -32,6 +33,7 @@ public class MainActivity extends Activity implements Animation.AnimationListene
     ImageView logo_img;
     TextView instruction_tv;
     ImageView settings_iv;
+    ImageView sync_iv;
 
     String myoInput;
 
@@ -44,6 +46,8 @@ public class MainActivity extends Activity implements Animation.AnimationListene
         //Animation ended
         if (animation.toString().equals(animZoomIn.toString())) {
             onPage = false;
+            //View view = findViewById(R.id.mainView);
+            //view.setBackgroundColor(Color.parseColor("#905778db"));
             Intent intent  = new Intent(getApplicationContext(), SpeakActivity.class);
             startActivityForResult(intent, 2);
         }
@@ -78,6 +82,7 @@ public class MainActivity extends Activity implements Animation.AnimationListene
         logo_img = (ImageView) findViewById(R.id.logo_img);
         instruction_tv = (TextView) findViewById(R.id.instructions_tv);
         settings_iv = (ImageView) findViewById(R.id.settings_iv);
+        sync_iv = (ImageView) findViewById(R.id.sync_iv);
 
         getActionBar().hide();
 
@@ -95,6 +100,29 @@ public class MainActivity extends Activity implements Animation.AnimationListene
                 startActivity(intent);
             }
         });
+
+        sync_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPage = false;
+                gestureManager = GestureManager.getInstance(getApplicationContext());
+                //onScanActionSelected();
+                Intent intent = new Intent(getApplicationContext(), CalibrateActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+
+//        speech_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                speech_btn.startAnimation(animZoomIn);
+//                logo_img.startAnimation(animFadeOut);
+//                instruction_tv.startAnimation(animFadeOut);
+//                Intent intent = new Intent(getApplicationContext(), SpeakActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+
     }
 
     public void unlockSpeech() {
@@ -110,7 +138,7 @@ public class MainActivity extends Activity implements Animation.AnimationListene
     protected void onDestroy() {
         super.onDestroy();
         // We don't want any callbacks when the Activity is gone, so unregister the listener.
-        gestureManager.destroyListener();
+        //gestureManager.destroyListener();
         if (isFinishing()) {
             // The Activity is finishing, so shutdown the Hub. This will disconnect from the Myo.
             gestureManager.finishHub();
