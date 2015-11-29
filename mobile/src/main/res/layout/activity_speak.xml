@@ -9,7 +9,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="#5778db"
     tools:context="com.tony.helen.flick.SpeakActivity">
-
     <ImageView
         android:layout_width="35dp"
         android:layout_height="35dp"
@@ -54,6 +53,4 @@
             android:textColor="#ecebeb"
             android:id="@+id/gesture_tv" />
     </LinearLayout>
-
-
 </RelativeLayout>

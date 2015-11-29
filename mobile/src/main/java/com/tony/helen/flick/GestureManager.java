@@ -68,7 +68,7 @@ public class GestureManager {
         listener = null;
 
         gesturePhrases[0] = "Hello";
-        gesturePhrases[1] = "Goodbye";
+        gesturePhrases[1] = "My name is Tony";
         gesturePhrases[2] = "Where is the washroom";
         gesturePhrases[3] = "Excuse me";
         gesturePhrases[4] = "Can I get a coffee please";

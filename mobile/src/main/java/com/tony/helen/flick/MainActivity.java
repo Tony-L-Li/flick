@@ -37,12 +37,16 @@ public class MainActivity extends Activity implements Animation.AnimationListene
 
     Animation animZoomIn;
     Animation animFadeOut;
+    boolean onPage;
 
     @Override
     public void onAnimationEnd(Animation animation) {
         //Animation ended
-        Intent intent  = new Intent(getApplicationContext(), SpeakActivity.class);
-        startActivity(intent);
+        if (animation.toString().equals(animZoomIn.toString())) {
+            onPage = false;
+            Intent intent  = new Intent(getApplicationContext(), SpeakActivity.class);
+            startActivityForResult(intent, 2);
+        }
     }
 
     @Override
@@ -59,7 +63,7 @@ public class MainActivity extends Activity implements Animation.AnimationListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        onPage = false;
         gestureManager = GestureManager.getInstance(this);
         //onScanActionSelected();
         Intent intent = new Intent(this, CalibrateActivity.class);
@@ -85,18 +89,10 @@ public class MainActivity extends Activity implements Animation.AnimationListene
         animFadeOut = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_out);
         animFadeOut.setAnimationListener(this);
 
-        textEngine = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status != TextToSpeech.ERROR) {
-                    textEngine.setLanguage(Locale.CANADA);
-                }
-            }
-        });
-
         settings_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                onPage = false;
                 Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(intent);
             }
@@ -104,6 +100,7 @@ public class MainActivity extends Activity implements Animation.AnimationListene
     }
 
     public void unlockSpeech() {
+
         speech_btn.startAnimation(animZoomIn);
         logo_img.startAnimation(animFadeOut);
         instruction_tv.startAnimation(animFadeOut);
@@ -124,8 +121,9 @@ public class MainActivity extends Activity implements Animation.AnimationListene
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        onPage = true;
         // Check which request we're responding to
-        if (requestCode == 1) {
+        if (requestCode == 1 || requestCode == 2) {
             gestureManager.setListener(this);
         }
     }
@@ -145,12 +143,10 @@ public class MainActivity extends Activity implements Animation.AnimationListene
 
     @Override
     public void onNewGesture(GestureManager.Gesture newGesture) {
-        Log.d("myo", newGesture.action());
-        if (newGesture == GestureManager.Gesture.UNLOCK) {
+        if (onPage && newGesture == GestureManager.Gesture.UNLOCK) {
+            onPage = false;
+            Log.d("myo", "STARTED SPEAK");
             unlockSpeech();
-        } else if (newGesture != GestureManager.Gesture.FIST && newGesture != GestureManager.Gesture.LOCK) {
-            Toast.makeText(getApplicationContext(), myoInput, Toast.LENGTH_SHORT).show();
-            textEngine.speak(gestureManager.getPhrase(newGesture), TextToSpeech.QUEUE_FLUSH, null);
         }
     }
 
