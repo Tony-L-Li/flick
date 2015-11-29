@@ -26,6 +26,16 @@
             android:label="@string/title_activity_calibrate"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
         </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="SettingsActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+        </activity>
+        <activity
+            android:name=".SpeakActivity"
+            android:label="SpeakActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+        </activity>
     </application>
 
 </manifest>
