@@ -124,18 +124,19 @@ public class MainActivity extends Activity implements Animation.AnimationListene
             }
         });
 
-//        speech_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                speech_btn.startAnimation(animZoomIn);
-//                logo_img.startAnimation(animFadeOut);
-//                instruction_tv.startAnimation(animFadeOut);
-//                Intent intent = new Intent(getApplicationContext(), SpeakActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        speech_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                speech_btn.startAnimation(animZoomIn);
+                logo_img.startAnimation(animFadeOut);
+                instruction_tv.startAnimation(animFadeOut);
+                Intent intent = new Intent(getApplicationContext(), SpeakActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
+    
 
     public void unlockSpeech() {
 
